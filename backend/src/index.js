@@ -17,11 +17,13 @@ const PORT = process.env.PORT
 const __dirname = path.resolve()
 
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "frontend", "dist")))
+    // Serve static files from the frontend build
+    app.use(express.static(path.join(__dirname, "frontend", "dist")));
     
-    app.get("/*", (req, res) => {
-        res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"))
-    })
+    // Catch-all route for SPA
+    app.get("/:path(.*)", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+    });
 }
 
 app.use(express.json())
