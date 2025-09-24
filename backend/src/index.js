@@ -16,13 +16,14 @@ dotenv.config()
 const PORT = process.env.PORT
 const __dirname = path.resolve()
 
-// Serve frontend in production
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "frontend", "dist")));
+  // Point to the dist folder one level up from backend/
+  const frontendPath = path.join(__dirname, "../frontend/dist");
 
-  // ✅ Use a regular expression catch-all (works with path-to-regexp v7)
+  app.use(express.static(frontendPath));
+
   app.get(/.*/, (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+    res.sendFile(path.join(frontendPath, "index.html"));
   });
 }
 
