@@ -29,13 +29,8 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(express.json())
 app.use(cookieParser())
-
-const allowedOrigins = process.env.NODE_ENV === "production"
-    ? ["https://fullstack-chat-app-vmlh.onrender.com"]
-    : ["http://localhost:5173"];
-
 app.use(cors({
-    origin: allowedOrigins,
+    origin: "http://localhost:5173",
     credentials: true
 }));
 
