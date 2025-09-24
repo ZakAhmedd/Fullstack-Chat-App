@@ -84,7 +84,11 @@ export const useAuthStore = create((set, get) => ({
 
     connectSocket: () => {
         const { authUser } = get()
-        if (!authUser || get().socket?.connected) return
+        // ✅ make sure authUser exists AND has a valid _id
+        if (!authUser || !authUser._id) return;
+
+        // ✅ don't reconnect if already connected
+        if (get().socket?.connected) return;
 
         const socket = io(BASE_URL, {
             query: {
