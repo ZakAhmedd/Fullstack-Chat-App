@@ -16,14 +16,15 @@ dotenv.config()
 const PORT = process.env.PORT
 const __dirname = path.resolve()
 
+// ✅ Serve frontend in production
 if (process.env.NODE_ENV === "production") {
-    // Serve static files from the frontend build
-    app.use(express.static(path.join(__dirname, "frontend", "dist")));
-    
-    // Catch-all route for SPA
-    app.get("/:path(.*)", (req, res) => {
-        res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
-    });
+  // Serve static files
+  app.use(express.static(path.join(__dirname, "frontend", "dist")));
+
+  // Catch-all route for SPA
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+  });
 }
 
 app.use(express.json())
