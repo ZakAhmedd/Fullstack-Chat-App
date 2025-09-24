@@ -16,13 +16,12 @@ dotenv.config()
 const PORT = process.env.PORT
 const __dirname = path.resolve()
 
-// ✅ Serve frontend in production
+// Serve frontend in production
 if (process.env.NODE_ENV === "production") {
-  // Serve static files
   app.use(express.static(path.join(__dirname, "frontend", "dist")));
 
-  // Catch-all route for SPA
-  app.get("*", (req, res) => {
+  // ✅ Use a regular expression catch-all (works with path-to-regexp v7)
+  app.get(/.*/, (req, res) => {
     res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
   });
 }
